@@ -101,6 +101,7 @@ static const char *player_next[] = {"playerctl", "next", NULL};
 static const char *player_previous[] = {"playerctl", "previous", NULL};
 static const char *lockscreen[] = {"betterlockscreen", "-l", "--blur", "50", NULL};
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
+static const char *rofi_mpd[] = {"/home/f/.config/rofi/bin/android_mpd"};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -155,6 +156,7 @@ static Key keys[] = {
     {0,                      XF86XK_AudioNext, spawn,          {.v= player_next} },
     {0,                      XF86XK_AudioPrev, spawn,          {.v= player_previous} },
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v= lockscreen} },
+	{ MODKEY|ShiftMask,             XK_m,      spawn,          {.v= rofi_mpd} },
 	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
 };
 
