@@ -22,13 +22,14 @@ nitrogen --restore &
 dwmblocks &
 
 # low battery check
-i3-battery-popup -L 15 -n -t 10s &
+i3-battery-popup -L 21 -n -t 10s &
 
 # Klipper
 klipper &
 
 # conky
-# conky -c $HOME/.config/conky/Mimosa/Mimosa.conf &> /dev/null &
+conky -c $HOME/.config/conky/Zozma/Zozma.conf &> /dev/null &
+conky -c $HOME/.config/conky/Zozma/Zozma2.conf &> /dev/null &
 
 # restarting dwm
 csum=""

@@ -56,8 +56,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "eww",      NULL,       NULL,       0,            1,           -1 },
-	{ "Onboard",  NULL,       NULL,       0,            1,           -1 },
+	{ "eww",      NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
 	{ NULL,		  "spranger",	NULL,		SPTAG(1),		1,			 -1 },
@@ -120,7 +119,6 @@ static const char *player_next[] = {"playerctl", "next", NULL};
 static const char *player_previous[] = {"playerctl", "previous", NULL};
 static const char *lockscreen[] = {"betterlockscreen", "-l", "--blur", "50", NULL};
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
-static const char *widgets[] = {"/home/f/.config/eww/catpad/launch", NULL};
 
 
 static Key keys[] = {
@@ -181,7 +179,6 @@ static Key keys[] = {
     {0,                      XF86XK_AudioPrev, spawn,          {.v= player_previous} },
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v= lockscreen} },
 	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
-	{ MODKEY,                       XK_semicolon,      spawn,  {.v = widgets } },
 };
 
 /* button definitions */
