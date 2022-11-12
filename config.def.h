@@ -26,10 +26,11 @@ static const char col_gray2[]       = "#313244";
 static const char col_text[]       = "#cdd6f4";
 static const char col_gray4[]       = "#45475a";
 static const char col_red[]         = "#f38ba8";
+static const char col_red2[]         = "#cba6f7";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_text, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_text, col_gray4,  col_red  },
+	[SchemeNorm] = { col_text, col_gray1, col_red2 },
+	[SchemeSel]  = { col_text, col_gray1,  col_red  },
 };
 
 typedef struct {
@@ -48,6 +49,11 @@ static Sp scratchpads[] = {
 
 /* tagging */
 static const char *tags[] = { "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94"};
+
+static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -122,6 +128,10 @@ static const char *lockscreen[] = {"betterlockscreen", "-l", "--blur", "50", NUL
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
 static const char *widgets[] = {"/home/f/.config/eww/catpad/launch", NULL};
 
+static const Launcher launchers[] = {
+       /* command       name to display */
+	{ widgets,         "" },
+};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */

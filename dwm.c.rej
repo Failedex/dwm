@@ -1,10 +1,31 @@
 --- dwm.c
 +++ dwm.c
-@@ -214,6 +217,7 @@ static void tagmon(const Arg *arg);
- static void tile(Monitor *);
- static void togglebar(const Arg *arg);
- static void togglefloating(const Arg *arg);
-+static void togglescratch(const Arg *arg);
- static void toggletag(const Arg *arg);
- static void toggleview(const Arg *arg);
- static void unfocus(Client *c, int setfocus);
+@@ -443,9 +448,26 @@ buttonpress(XEvent *e)
+ 		if (i < LENGTH(tags)) {
+ 			click = ClkTagBar;
+ 			arg.ui = 1 << i;
+-		} else if (ev->x < x + blw)
++			goto execute_handler;
++		} else if (ev->x < x + blw) {
+ 			click = ClkLtSymbol;
+-		else if (ev->x > selmon->ww - TEXTW(stext))
++			goto execute_handler;
++		}
++
++		x += blw;
++
++		for(i = 0; i < LENGTH(launchers); i++) {
++			x += TEXTW(launchers[i].name);
++			
++			if (ev->x < x) {
++				Arg a;
++				a.v = launchers[i].command;
++				spawn(&a);
++				return;
++			}
++		}	
++
++		if (ev->x > selmon->ww - TEXTW(stext))
+ 			click = ClkStatusText;
+ 		else
+ 			click = ClkWinTitle;

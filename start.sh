@@ -27,6 +27,9 @@ i3-battery-popup -L 15 -n -t 10s &
 # Klipper
 klipper &
 
+# eww daemon
+eww daemon &
+
 # conky
 # conky -c $HOME/.config/conky/Mimosa/Mimosa.conf &> /dev/null &
 
