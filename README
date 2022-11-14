@@ -3,3 +3,19 @@ dwm - dynamic window manager
 this is my messy patch of dwm
 
 not sure why anyone would want to use this except for myself so I won't include installation instructions
+
+dependencies (just so I remember):
+- picom
+- sox (play)
+- dunst
+- xrandr
+- rofi
+- nitrogen
+- klipper
+- eww
+- betterlockscreen
+- brightnessctl
+- pactl
+- playerctl
+
+i think thats it idk

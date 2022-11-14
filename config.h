@@ -64,6 +64,7 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "eww",      NULL,       NULL,       0,            1,           -1 },
 	{ "Onboard",  NULL,       NULL,       0,            1,           -1 },
+	{ "Tk",  NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
 	{ NULL,		  "spranger",	NULL,		SPTAG(1),		1,			 -1 },
@@ -127,6 +128,7 @@ static const char *player_previous[] = {"playerctl", "previous", NULL};
 static const char *lockscreen[] = {"betterlockscreen", "-l", "--blur", "50", NULL};
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
 static const char *widgets[] = {"/home/f/.config/eww/catpad/launch", NULL};
+static const char *freebird[] = {"play", "/home/f/dwm-6.3/freebird.mp3", NULL};
 
 static const Launcher launchers[] = {
        /* command       name to display */
@@ -192,6 +194,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v= lockscreen} },
 	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
 	{ MODKEY,                       XK_semicolon,      spawn,  {.v = widgets } },
+	{ MODKEY|ShiftMask|ControlMask, XK_1,      spawn,          {.v = freebird } },
 };
 
 /* button definitions */
