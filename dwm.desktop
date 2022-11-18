@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Dwm
+Comment=Dwm Session
+Exec=/home/f/dwm-6.3/start.sh
+Type=Application
