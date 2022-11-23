@@ -29,8 +29,8 @@ static const char col_red[]         = "#f38ba8";
 static const char col_red2[]         = "#cba6f7";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_text, col_gray1, col_red2 },
-	[SchemeSel]  = { col_text, col_gray1,  col_red  },
+	[SchemeNorm] = { col_text, col_gray2, col_red2 },
+	[SchemeSel]  = { col_text, col_gray2,  col_red  },
 };
 
 typedef struct {
@@ -66,6 +66,7 @@ static const Rule rules[] = {
 	{ "Onboard",  NULL,       NULL,       0,            1,           -1 },
 	{ "Tk",  NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Steam",    NULL,       NULL,       1 << 8,       1,           -1 },
 	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
 	{ NULL,		  "spranger",	NULL,		SPTAG(1),		1,			 -1 },
 	{ NULL,		  "spncmpcpp",	NULL,		SPTAG(2),		1,			 -1 },
@@ -113,6 +114,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_text, "-sb", col_red, "-sf", col_gray4, NULL };
+static const char *clipboard[] = {"clipmenu", "-fn", "Iosevka Nerd Font:15", "-nb", "#313244", "-sb", "#45475a", "-sf", "#f38ba8", NULL};
 static const char *termcmd[]  = { "st", NULL };
 
 static const char *brightness_up[] = {"brightnessctl", "-e", "s", "+5000", NULL};
@@ -129,6 +131,7 @@ static const char *lockscreen[] = {"betterlockscreen", "-l", "--blur", "50", NUL
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
 static const char *widgets[] = {"/home/f/.config/eww/catpad/launch", NULL};
 static const char *freebird[] = {"play", "/home/f/dwm-6.3/freebird.mp3", NULL};
+static const char *flameshot[] = {"flameshot", "launcher", NULL};
 
 static const Launcher launchers[] = {
        /* command       name to display */
@@ -191,8 +194,10 @@ static Key keys[] = {
     {0,                     XF86XK_AudioPause, spawn,          {.v= player_toggle} },
     {0,                      XF86XK_AudioNext, spawn,          {.v= player_next} },
     {0,                      XF86XK_AudioPrev, spawn,          {.v= player_previous} },
+    {0,                            0x0000ff61, spawn,          {.v= flameshot} },
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v= lockscreen} },
 	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = clipboard } },
 	{ MODKEY,                       XK_semicolon,      spawn,  {.v = widgets } },
 	{ MODKEY|ShiftMask|ControlMask, XK_1,      spawn,          {.v = freebird } },
 };
