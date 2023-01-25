@@ -14,11 +14,11 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 0;     /* 0 means no systray */
+static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const int vertpad            = 10;       /* vertical padding of bar */
-static const int sidepad            = 10;       /* horizontal padding of bar */
+static const int vertpad            = 0;       /* vertical padding of bar */
+static const int sidepad            = 0;       /* horizontal padding of bar */
 static const int horizpadbar        = 10;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 8;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "Iosevka Nerd Font:size=12" };
@@ -56,6 +56,14 @@ static const unsigned int ulinepad	= 5;	/* horizontal padding between the underl
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
 static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
+
+static const char *tagsel[][2] = {
+	{ "#eba0ac", col_gray2 },
+	{ "#fab387", col_gray2 },
+	{ "#f9e2af", col_gray2 },
+	{ "#a6e3a1", col_gray2 },
+	{ "#94e2d5", col_gray2 },
+};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -130,6 +138,7 @@ static const char *player_toggle[] = {"playerctl", "play-pause", NULL};
 static const char *player_next[] = {"playerctl", "next", NULL};
 static const char *player_previous[] = {"playerctl", "previous", NULL};
 static const char *lockscreen[] = {"betterlockscreen", "-l", "--blur", "50", NULL};
+static const char *locksleep[] = {"dm-tool", "lock", NULL};
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
 static const char *widgets[] = {"/home/f/.config/eww/catpad/launch", NULL};
 static const char *freebird[] = {"play", "/home/f/dwm-6.3/freebird.mp3", NULL};
@@ -198,6 +207,7 @@ static Key keys[] = {
     {0,                      XF86XK_AudioPrev, spawn,          {.v= player_previous} },
     {0,                            0x0000ff61, spawn,          {.v= flameshot} },
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v= lockscreen} },
+	{ MODKEY|ControlMask,           XK_x,      spawn,          {.v= locksleep} },
 	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = clipboard } },
 	{ MODKEY,                       XK_semicolon,      spawn,  {.v = widgets } },
