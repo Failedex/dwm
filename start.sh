@@ -40,6 +40,9 @@ udiskie --automount --notify &
 unclutter --hide-on-touch --timeout 10 &
 pulseaudio &
 
+# dwmblocks
+dwmblocks &
+
 ## if not found, launch a new one
 if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then eval `dbus-launch --sh-syntax`; fi
 
@@ -58,53 +61,3 @@ do
     new_csum=$(shasum $(which dwm))
     sleep 0.5
 done
-
-# execute dwm
-exec dwm
-picom &
-
-# notifications
-dunst &
-
-# dwmblocks
-dwmblocks &
-
-# nm-applet
-nm-applet --indicator &
-
-# wallpaper
-nitrogen --restore &
-
-# dwmblocks
-dwmblocks &
-
-# low battery check
-i3-battery-popup -L 15 -n -t 10s &
-
-# Klipper
-klipper &
-
-# eww daemon
-/usr/bin/eww daemon &
-
-# conky
-# conky -c $HOME/.config/conky/Mimosa/Mimosa.conf &> /dev/null &
-
-# restarting dwm
-csum=""
-new_csum=$(sha1sum $(which dwm))
-while true
-do
-    if [ "$csum" != "$new_csum" ]
-    then
-        csum=$new_csum
-        dwm
-    else
-        exit 0
-    fi
-    new_csum=$(shasum $(which dwm))
-    sleep 0.5
-done
-
-# Execute dwm
-exec dwm

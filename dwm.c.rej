@@ -1,17 +1,24 @@
---- dwm.c
-+++ dwm.c
-@@ -1569,9 +1570,14 @@ setup(void)
- 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
- 	cursor[CurMove] = drw_cur_create(drw, XC_fleur);
- 	/* init appearance */
-+	if (LENGTH(tags) > LENGTH(tagsel))
-+		die("too few color schemes for the tags");
- 	scheme = ecalloc(LENGTH(colors), sizeof(Clr *));
- 	for (i = 0; i < LENGTH(colors); i++)
- 		scheme[i] = drw_scm_create(drw, colors[i], 3);
-+	tagscheme = ecalloc(LENGTH(tagsel), sizeof(Clr *));
-+	for (i = 0; i < LENGTH(tagsel); i++)
-+		tagscheme[i] = drw_scm_create(drw, tagsel[i], 2);
- 	/* init bars */
- 	updatebars();
- 	updatestatus();
+--- dwm.c	2020-07-09 16:49:43.497542191 +0200
++++ dwm.c	2020-07-09 16:49:10.023585649 +0200
+@@ -702,7 +702,7 @@ drawbar(Monitor *m)
+ 	Client *c;
+ 
+ 	/* draw status first so it can be overdrawn by tags later */
+-	if (m == selmon || 1) { /* status is only drawn on selected monitor */
++	if (m == selmon) { /* status is only drawn on selected monitor */
+ 		drw_setscheme(drw, scheme[SchemeNorm]);
+ 		sw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
+ 		drw_text(drw, m->ww - sw, 0, sw, bh, 0, stext, 0);
+@@ -1987,11 +1987,9 @@ updatesizehints(Client *c)
+ void
+ updatestatus(void)
+ {
+-	Monitor* m;
+ 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
+ 		strcpy(stext, "dwm-"VERSION);
+-	for(m = mons; m; m = m->next)
+-		drawbar(m);
++	drawbar(selmon);
+ }
+ 
+ void
