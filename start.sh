@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Keyboard Layout
-/usr/bin/setxkbmap -option caps:swapescape &
-
 # Display Resolution
 xrandr --output Monitor-1 --mode 1920x1080 &
 
@@ -15,6 +12,9 @@ syndaemon -i 0.5 -d &
 
 # Display Resolution
 xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP1 --mode 1440x900 --pos 1920x90 --rotate normal --output HDMI1 --off --output VIRTUAL1 --off
+
+# map touch-screen to specific monitor
+xinput map-to-output "ELAN900C:00 04F3:2C66" eDP1 &
 
 # compositor
 picom &

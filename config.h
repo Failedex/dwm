@@ -1,6 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 #include <X11/XF86keysym.h>
+#include "/home/f/.cache/wal/colors-wal-dwm.h"
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
@@ -31,11 +32,13 @@ static const char col_text[]       = "#cdd6f4";
 static const char col_gray4[]       = "#45475a";
 static const char col_red[]         = "#f38ba8";
 static const char col_red2[]         = "#cba6f7";
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_text, col_gray2, col_red2 },
-	[SchemeSel]  = { col_text, col_gray2,  col_red  },
-};
+
+// static const char *colors[][3]      = {
+// 	/*               fg         bg         border   */
+// 	[SchemeNorm] = { col_text, col_gray2, col_red2 },
+// 	[SchemeSel]  = { col_text, col_gray2,  col_red  },
+// };
+
 
 typedef struct {
 	const char *name;
@@ -60,11 +63,11 @@ static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the b
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const char *tagsel[][2] = {
-	{ "#eba0ac", col_gray2 },
-	{ "#fab387", col_gray2 },
-	{ "#f9e2af", col_gray2 },
-	{ "#a6e3a1", col_gray2 },
-	{ "#94e2d5", col_gray2 },
+	{ "#eba0ac", sel_bg },
+	{ "#fab387", sel_bg },
+	{ "#f9e2af", sel_bg },
+	{ "#a6e3a1", sel_bg },
+	{ "#94e2d5", sel_bg },
 };
 
 static const Rule rules[] = {
