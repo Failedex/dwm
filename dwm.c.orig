@@ -1020,8 +1020,7 @@ drawbar(Monitor *m)
 void
 drawbars(void)
 {
-	Monitor *m;
-
+	Monitor* m;
 	for (m = mons; m; m = m->next)
 		drawbar(m);
 }
@@ -2515,6 +2514,7 @@ updatestatus(void)
 {
 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
 		strcpy(stext, "dwm-"VERSION);
+	drawbars();
 	updatesystray();
 }
 

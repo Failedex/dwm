@@ -30,6 +30,7 @@ clipmenud &
 
 # wallpaper
 nitrogen --restore &
+# wal -R
 
 
 # low battery check

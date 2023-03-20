@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 #include <X11/XF86keysym.h>
-#include "/home/f/.cache/wal/colors-wal-dwm.h"
+// #include "/home/f/.cache/wal/colors-wal-dwm.h"
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
@@ -15,7 +15,7 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
+static const int showsystray        = 0;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
 static const int vertpad            = 0;       /* vertical padding of bar */
@@ -32,12 +32,14 @@ static const char col_text[]       = "#cdd6f4";
 static const char col_gray4[]       = "#45475a";
 static const char col_red[]         = "#f38ba8";
 static const char col_red2[]         = "#cba6f7";
+static const char col_urgborder[]         = "#ff0000";
 
-// static const char *colors[][3]      = {
-// 	/*               fg         bg         border   */
-// 	[SchemeNorm] = { col_text, col_gray2, col_red2 },
-// 	[SchemeSel]  = { col_text, col_gray2,  col_red  },
-// };
+static const char *colors[][3]      = {
+	/*               fg         bg         border   */
+	[SchemeNorm] = { col_text, col_gray2, col_red2 },
+	[SchemeSel]  = { col_text, col_gray2,  col_red  },
+	[SchemeUrg]  = { col_text, col_gray2,  col_red  },
+};
 
 
 typedef struct {
@@ -63,11 +65,16 @@ static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the b
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const char *tagsel[][2] = {
-	{ "#eba0ac", sel_bg },
-	{ "#fab387", sel_bg },
-	{ "#f9e2af", sel_bg },
-	{ "#a6e3a1", sel_bg },
-	{ "#94e2d5", sel_bg },
+ 	{ "#eba0ac", col_gray2 },
+	{ "#fab387", col_gray2 },
+	{ "#f9e2af", col_gray2 },
+	{ "#a6e3a1", col_gray2 },
+	{ "#94e2d5", col_gray2 },
+// 	{ sel_fg, norm_bg },
+// 	{ sel_fg, norm_bg },
+// 	{ sel_fg, norm_bg },
+// 	{ sel_fg, norm_bg },
+// 	{ sel_fg, norm_bg },
 };
 
 static const Rule rules[] = {
@@ -128,7 +135,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_text, "-sb", col_red, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "/home/f/dwm-6.3/dmen.sh" };
 static const char *clipboard[] = {"clipmenu", "-fn", "Iosevka Nerd Font:15", "-nb", "#313244", "-sb", "#45475a", "-sf", "#f38ba8", NULL};
 static const char *termcmd[]  = { "st", NULL };
 
@@ -148,6 +155,7 @@ static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
 static const char *widgets[] = {"/home/f/.config/eww/catpad/launch", NULL};
 static const char *freebird[] = {"play", "/home/f/dwm-6.3/freebird.mp3", NULL};
 static const char *flameshot[] = {"flameshot", "launcher", NULL};
+static const char *flameshotgui[] = {"flameshot", "gui", NULL};
 
 static const Launcher launchers[] = {
        /* command       name to display */
@@ -211,6 +219,7 @@ static Key keys[] = {
     {0,                      XF86XK_AudioNext, spawn,          {.v= player_next} },
     {0,                      XF86XK_AudioPrev, spawn,          {.v= player_previous} },
     {0,                            0x0000ff61, spawn,          {.v= flameshot} },
+    {ShiftMask,                    0x0000ff61, spawn,          {.v= flameshotgui} },
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v= lockscreen} },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          {.v= locksleep} },
 	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
