@@ -141,6 +141,7 @@ static const char *termcmd[]  = { "st", NULL };
 
 static const char *brightness_up[] = {"brightnessctl", "-e", "s", "+5000", NULL};
 static const char *brightness_down[] = {"brightnessctl", "-e", "s", "5000-", NULL};
+static const char *brightness_update[] = {"pkill", "-RTMIN+6", "dwmblocks", NULL};
 
 static const char *volume_up[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
 static const char *volume_down[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL};
@@ -194,7 +195,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			XK_r,	   togglescratch,  {.ui = 1 } },
+	{ MODKEY,            			XK_e,	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			XK_n,	   togglescratch,  {.ui = 2 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
@@ -208,6 +209,8 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_q,      quit,           {0} },
     {0,                XF86XK_MonBrightnessUp, spawn,          {.v = brightness_up} },
     {0,              XF86XK_MonBrightnessDown, spawn,          {.v = brightness_down} },
+    {0,                XF86XK_MonBrightnessUp, spawn,          {.v = brightness_update} },
+    {0,              XF86XK_MonBrightnessDown, spawn,          {.v = brightness_update} },
     {0,                      XF86XK_AudioMute, spawn,          {.v= volume_mute} },
     {0,               XF86XK_AudioLowerVolume, spawn,          {.v= volume_down} },
     {0,               XF86XK_AudioRaiseVolume, spawn,          {.v= volume_up} },
