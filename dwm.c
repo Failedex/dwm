@@ -895,9 +895,14 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 		isCode = 0;
 	text = p;
 
-	w += 2; /* 1px padding on both sides */
+	w += 2 + horizpadbar + sidepad; /* 1px padding on both sides */
 	ret = m->ww - w;
-	x = m->ww - w - getsystraywidth();
+
+    if (m == systraytomon(m)) {
+        x = m->ww - w - getsystraywidth();
+    } else {
+        x = m->ww - w;
+    }
 
 	drw_setscheme(drw, scheme[LENGTH(colors)]);
 	drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
@@ -2540,22 +2545,24 @@ updatestatus(void)
 void
 updatesystrayicongeom(Client *i, int w, int h)
 {
+    int rh = bh - vertpadbar;
 	if (i) {
-		i->h = bh;
+		i->h = rh;
 		if (w == h)
-			i->w = bh;
-		else if (h == bh)
+			i->w = rh;
+		else if (h == rh)
 			i->w = w;
 		else
-			i->w = (int) ((float)bh * ((float)w / (float)h));
+			i->w = (int) ((float)rh * ((float)w / (float)h));
+        i->y = i->y + vertpadbar/2;
 		applysizehints(i, &(i->x), &(i->y), &(i->w), &(i->h), False);
 		/* force icons into the systray dimensions if they don't want to */
-		if (i->h > bh) {
+		if (i->h > rh) {
 			if (i->w == i->h)
-				i->w = bh;
+				i->w = rh;
 			else
-				i->w = (int) ((float)bh * ((float)i->w / (float)i->h));
-			i->h = bh;
+				i->w = (int) ((float)rh * ((float)i->w / (float)i->h));
+			i->h = rh;
 		}
 	}
 }
@@ -2595,7 +2602,7 @@ updatesystray(void)
 	XWindowChanges wc;
 	Client *i;
 	Monitor *m = systraytomon(NULL);
-	unsigned int x = m->mx + m->mw;
+	unsigned int x = m->mx + m->mw - m->gappov;
 	unsigned int sw = TEXTW(stext) - lrpad + systrayspacing;
 	unsigned int w = 1;
 
@@ -2607,7 +2614,7 @@ updatesystray(void)
 		/* init systray */
 		if (!(systray = (Systray *)calloc(1, sizeof(Systray))))
 			die("fatal: could not malloc() %u bytes\n", sizeof(Systray));
-		systray->win = XCreateSimpleWindow(dpy, root, x, m->by, w, bh, 0, 0, scheme[SchemeSel][ColBg].pixel);
+		systray->win = XCreateSimpleWindow(dpy, root, x, m->by + vertpad, w, bh, 0, 0, scheme[SchemeSel][ColBg].pixel);
 		wa.event_mask        = ButtonPressMask | ExposureMask;
 		wa.override_redirect = True;
 		wa.background_pixel  = scheme[SchemeNorm][ColBg].pixel;
@@ -2635,15 +2642,15 @@ updatesystray(void)
 		XMapRaised(dpy, i->win);
 		w += systrayspacing;
 		i->x = w;
-		XMoveResizeWindow(dpy, i->win, i->x, 0, i->w, i->h);
+		XMoveResizeWindow(dpy, i->win, i->x, vertpadbar/2, i->w, i->h);
 		w += i->w;
 		if (i->mon != m)
 			i->mon = m;
 	}
 	w = w ? w + systrayspacing : 1;
 	x -= w;
-	XMoveResizeWindow(dpy, systray->win, x, m->by, w, bh);
-	wc.x = x; wc.y = m->by; wc.width = w; wc.height = bh;
+	XMoveResizeWindow(dpy, systray->win, x, m->by + vertpad, w, bh);
+	wc.x = x; wc.y = m->by + vertpad; wc.width = w; wc.height = bh;
 	wc.stack_mode = Above; wc.sibling = m->barwin;
 	XConfigureWindow(dpy, systray->win, CWX|CWY|CWWidth|CWHeight|CWSibling|CWStackMode, &wc);
 	XMapWindow(dpy, systray->win);
