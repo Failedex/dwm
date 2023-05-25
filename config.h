@@ -4,8 +4,9 @@
 // #include "/home/f/.cache/wal/colors-wal-dwm.h"
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int snap      = 0;       /* snap pixel */
+static const          int swallowfloating = 1;
 static const unsigned int gappih    = 15;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 15;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 15;       /* horiz outer gap between windows and screen edge */
@@ -18,10 +19,10 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
-static const int vertpad            = 15;       /* vertical padding of bar */
-static const int sidepad            = 15;       /* horizontal padding of bar */
+static const int vertpad            = 0;       /* vertical padding of bar */
+static const int sidepad            = 0;       /* horizontal padding of bar */
 static const int horizpadbar        = 10;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 8;        /* vertical padding for statusbar */
+static const int vertpadbar         = 10;        /* vertical padding for statusbar */
 #define ICONSIZE 16   /* icon size */
 #define ICONSPACING 5 /* space between icon and title */
 static const char *fonts[]          = { "Iosevka Nerd Font:size=12" };
@@ -31,14 +32,14 @@ static const char col_gray2[]       = "#313244";
 static const char col_text[]       = "#cdd6f4";
 static const char col_gray4[]       = "#45475a";
 static const char col_red[]         = "#f38ba8";
-static const char col_red2[]         = "#cba6f7";
+static const char col_red2[]         = "#89b4fa";
 static const char col_urgborder[]         = "#ff0000";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_text, col_gray2, col_red2 },
-	[SchemeSel]  = { col_text, col_gray2,  col_red  },
-	[SchemeUrg]  = { col_text, col_gray2,  col_red  },
+	[SchemeNorm] = { col_text, col_gray1, col_gray1 },
+	[SchemeSel]  = { col_text, col_gray1,  col_red  },
+	[SchemeUrg]  = { col_text, col_gray1,  col_red  },
 };
 
 
@@ -65,11 +66,11 @@ static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the b
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const char *tagsel[][2] = {
- 	{ "#eba0ac", col_gray2 },
-	{ "#fab387", col_gray2 },
-	{ "#f9e2af", col_gray2 },
-	{ "#a6e3a1", col_gray2 },
-	{ "#94e2d5", col_gray2 },
+ 	{ "#eba0ac", col_gray1 },
+	{ "#fab387", col_gray1 },
+	{ "#f9e2af", col_gray1 },
+	{ "#a6e3a1", col_gray1 },
+	{ "#94e2d5", col_gray1 },
 // 	{ sel_fg, norm_bg },
 // 	{ sel_fg, norm_bg },
 // 	{ sel_fg, norm_bg },
@@ -82,16 +83,21 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "eww",      NULL,       NULL,       0,            1,           -1 },
-	{ "Onboard",  NULL,       NULL,       0,            1,           -1 },
-	{ "Tk",  NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "Steam",    NULL,       NULL,       1 << 8,       1,           -1 },
-	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
-	{ NULL,		  "spranger",	NULL,		SPTAG(1),		1,			 -1 },
-	{ NULL,		  "spncmpcpp",	NULL,		SPTAG(2),		1,			 -1 },
+	/* class      instance    title       tags mask     isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",     NULL,       NULL,       0,            1,          0,          1,           -1 },
+	{ "eww",      NULL,       NULL,       0,            1,          0,          1,           -1 },
+	{ "Onboard",  NULL,       NULL,       0,            1,          0,          1,           -1 },
+	{ "Tk",       NULL,       NULL,       0,            1,          0,          1,           -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 8,       0,          0,          0,           -1 },
+	{ "Steam",    NULL,       NULL,       1 << 8,       1,          0,          1,           -1 },
+	{ "floatst",  NULL,       NULL,       0,            1,          0,          0,           -1 },
+	{ "st",       NULL,       NULL,       0,            0,          1,          0,           -1 },
+	{ "kitty",    NULL,       NULL,       0,            0,          1,          0,           -1 },
+	{ "feh",      NULL,       NULL,       0,            1,          0,          0,           -1 },
+	{ "mpv",      NULL,       NULL,       0,            1,          0,          0,           -1 },
+	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,		1,	        0,           -1 },
+	{ NULL,		  "spranger",	NULL,		SPTAG(1),		1,		1,	        0,           -1 },
+	{ NULL,		  "spncmpcpp",	NULL,		SPTAG(2),		1,		1,	        0,           -1 },
 };
 
 /* layout(s) */
@@ -147,14 +153,18 @@ static const char *volume_up[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", 
 static const char *volume_down[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL};
 static const char *volume_mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL};
 static const char *volume_update[] = {"pkill", "-RTMIN+1", "dwmblocks", NULL};
+
 static const char *player_toggle[] = {"playerctl", "play-pause", NULL};
 static const char *player_next[] = {"playerctl", "next", NULL};
 static const char *player_previous[] = {"playerctl", "previous", NULL};
+
 static const char *lockscreen[] = {"betterlockscreen", "-l", "--blur", "50", NULL};
 static const char *locksleep[] = {"dm-tool", "lock", NULL};
+
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
-static const char *widgets[] = {"/home/f/.config/eww/catpad/launch", NULL};
+static const char *widgets[] = {"/home/f/.config/eww/meowidgets/scripts/launch", NULL};
 static const char *freebird[] = {"play", "/home/f/dwm-6.3/freebird.mp3", NULL};
+
 static const char *flameshot[] = {"flameshot", "launcher", NULL};
 static const char *flameshotgui[] = {"flameshot", "gui", NULL};
 
@@ -167,6 +177,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY|ShiftMask,             XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMD("st -c floatst -G $(slop)") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -199,6 +210,7 @@ static Key keys[] = {
 	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_e,	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			XK_n,	   togglescratch,  {.ui = 2 } },
+	{ MODKEY,                       XK_q,      spawn,          SHCMD("qalculate-gtk") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

@@ -1,11 +1,25 @@
 --- dwm.c
 +++ dwm.c
-@@ -59,7 +59,7 @@
+@@ -98,9 +104,11 @@ struct Client {
+ 	int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
+ 	int bw, oldbw;
+ 	unsigned int tags;
+-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
++	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow;
++	pid_t pid;
+ 	Client *next;
+ 	Client *snext;
++	Client *swallowing;
+ 	Monitor *mon;
+ 	Window win;
+ };
+@@ -721,6 +788,9 @@ destroynotify(XEvent *e)
  
- /* enums */
- enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
--enum { SchemeNorm, SchemeSel }; /* color schemes */
-+enum { SchemeNorm, SchemeSel, SchemeUrg }; /* color schemes */
- enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
-        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
-        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
+ 	if ((c = wintoclient(ev->window)))
+ 		unmanage(c, 1);
++
++	else if ((c = swallowingclient(ev->window)))
++		unmanage(c->swallowing, 1);
+ }
+ 
+ void
