@@ -247,6 +247,7 @@ static void resizemouse(const Arg *arg);
 static void resizerequest(XEvent *e);
 static void restack(Monitor *m);
 static void run(void);
+static void runAutostart(void);
 static void scan(void);
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4);
 static void sendmon(Client *c, Monitor *m);
@@ -965,7 +966,7 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 		isCode = 0;
 	text = p;
 
-	w += 2 + horizpadbar + sidepad; /* 1px padding on both sides */
+	w += 2 + sidepad; /* 1px padding on both sides */
 	ret = m->ww - w;
 
     if (m == systraytomon(m)) {
@@ -1913,6 +1914,12 @@ run(void)
 }
 
 void
+runAutostart(void) {
+	system("cd ~/dwm-6.3; ./autostart_blocking.sh");
+	system("cd ~/dwm-6.3; ./autostart.sh &");
+}
+
+void
 scan(void)
 {
 	unsigned int i, num;
@@ -2693,7 +2700,7 @@ updatesystray(void)
 	XWindowChanges wc;
 	Client *i;
 	Monitor *m = systraytomon(NULL);
-	unsigned int x = m->mx + m->mw - m->gappov;
+	unsigned int x = m->mx + m->mw - vertpad;
 	unsigned int sw = TEXTW(stext) - lrpad + systrayspacing;
 	unsigned int w = 1;
 
@@ -3070,6 +3077,7 @@ main(int argc, char *argv[])
 		die("pledge");
 #endif /* __OpenBSD__ */
 	scan();
+	runAutostart();
 	run();
 	cleanup();
 	XCloseDisplay(dpy);
