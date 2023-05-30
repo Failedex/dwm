@@ -4,7 +4,7 @@
 // #include "/home/f/.cache/wal/colors-wal-dwm.h"
 
 /* appearance */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 0;       /* snap pixel */
 static const          int swallowfloating = 1;
 static const unsigned int gappih    = 15;       /* horiz inner gap between windows */
@@ -30,7 +30,7 @@ static const char dmenufont[]       = "Iosevka Nerd Font:size=10";
 static const char col_gray1[]       = "#1e1e2e";
 static const char col_gray2[]       = "#313244";
 static const char col_text[]       = "#cdd6f4";
-static const char col_gray4[]       = "#45475a";
+static const char col_gray4[]       = "#6c7086";
 static const char col_red[]         = "#f38ba8";
 static const char col_red2[]         = "#89b4fa";
 static const char col_urgborder[]         = "#ff0000";
@@ -38,8 +38,8 @@ static const char col_urgborder[]         = "#ff0000";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_text, col_gray1, col_gray1 },
-	[SchemeSel]  = { col_text, col_gray1,  col_red  },
-	[SchemeUrg]  = { col_text, col_gray1,  col_red  },
+	[SchemeSel]  = { col_text, col_gray2,  col_gray4  },
+	[SchemeUrg]  = { col_text, col_gray2,  col_red  },
 };
 
 
@@ -47,9 +47,9 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "96x30", NULL };
-const char *spcmd2[] = {"st", "-n", "spranger", "-g", "120x34", "-e", "ranger", NULL };
-const char *spcmd3[] = {"st", "-n", "spncmpcpp", "-g", "120x34", "-e", "ncmpcpp", NULL };
+const char *spcmd1[] = {"alacritty", "--class", "spterm", NULL };
+const char *spcmd2[] = {"alacritty", "--class", "spranger", "-e", "ranger", NULL };
+const char *spcmd3[] = {"alacritty", "--class", "spncmpcpp", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
@@ -66,11 +66,11 @@ static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the b
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const char *tagsel[][2] = {
- 	{ "#eba0ac", col_gray1 },
-	{ "#fab387", col_gray1 },
-	{ "#f9e2af", col_gray1 },
-	{ "#a6e3a1", col_gray1 },
-	{ "#94e2d5", col_gray1 },
+ 	{ "#eba0ac", col_gray2 },
+	{ "#fab387", col_gray2 },
+	{ "#f9e2af", col_gray2 },
+	{ "#a6e3a1", col_gray2 },
+	{ "#94e2d5", col_gray2 },
 // 	{ sel_fg, norm_bg },
 // 	{ sel_fg, norm_bg },
 // 	{ sel_fg, norm_bg },
@@ -91,6 +91,7 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,          0,          0,           -1 },
 	{ "Steam",    NULL,       NULL,       1 << 8,       1,          0,          1,           -1 },
 	{ "floatst",  NULL,       NULL,       0,            1,          0,          0,           -1 },
+	{ "Qalculate-gtk", NULL,       NULL,       0,            1,          0,          0,           -1 },
 	{ "st",       NULL,       NULL,       0,            0,          1,          0,           -1 },
 	{ "kitty",    NULL,       NULL,       0,            0,          1,          0,           -1 },
 	{ "feh",      NULL,       NULL,       0,            1,          0,          0,           -1 },
@@ -143,7 +144,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "/home/f/dwm-6.3/dmen.sh" };
 static const char *clipboard[] = {"clipmenu", "-fn", "Iosevka Nerd Font:15", "-nb", "#313244", "-sb", "#45475a", "-sf", "#f38ba8", NULL};
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 
 static const char *brightness_up[] = {"brightnessctl", "-e", "s", "+5000", NULL};
 static const char *brightness_down[] = {"brightnessctl", "-e", "s", "5000-", NULL};
@@ -170,7 +171,7 @@ static const char *flameshotgui[] = {"flameshot", "gui", NULL};
 
 static const Launcher launchers[] = {
        /* command       name to display */
-	{ widgets,         "" },
+	{ widgets,         " " },
 };
 
 static Key keys[] = {

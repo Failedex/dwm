@@ -33,6 +33,7 @@ nitrogen --restore &
 # stupid things
 udiskie --automount --notify &
 unclutter --hide-on-touch --timeout 10 &
+$HOME/.config/eww/meowidgets/scripts/timer.py &
 
 # dwmblocks
 dwmblocks &
