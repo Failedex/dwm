@@ -145,6 +145,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "/home/f/dwm-6.3/dmen.sh" };
 static const char *clipboard[] = {"clipmenu", "-fn", "Iosevka Nerd Font:15", "-nb", "#313244", "-sb", "#45475a", "-sf", "#f38ba8", NULL};
 static const char *termcmd[]  = { "alacritty", NULL };
+static const char *layoutmenu_cmd = "/home/f/dwm-6.3/layoutmenu.sh";
 
 static const char *brightness_up[] = {"brightnessctl", "-e", "s", "+5000", NULL};
 static const char *brightness_down[] = {"brightnessctl", "-e", "s", "5000-", NULL};
@@ -159,7 +160,7 @@ static const char *player_toggle[] = {"playerctl", "play-pause", NULL};
 static const char *player_next[] = {"playerctl", "next", NULL};
 static const char *player_previous[] = {"playerctl", "previous", NULL};
 
-static const char *lockscreen[] = {"betterlockscreen", "-l", "--blur", "50", NULL};
+static const char *lockscreen[] = {"i3lock", "-i", "/home/f/Pictures/wallpapers/minimalistic/dark-cat-rosewater.png", NULL};
 static const char *locksleep[] = {"dm-tool", "lock", NULL};
 
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
@@ -250,6 +251,7 @@ static Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
+	{ ClkLtSymbol,          0,              Button1,        layoutmenu, {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
