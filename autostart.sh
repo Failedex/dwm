@@ -33,6 +33,7 @@ nitrogen --restore &
 # stupid things
 udiskie --automount --notify &
 unclutter --hide-on-touch --timeout 10 &
+pulseaudio &
 while true; do state=$(xinput) && sleep 2 && [[ $state != $(xinput) ]] && setxkbmap -option caps:swapescape && xinput map-to-output "ELAN900C:00 04F3:2C66 Stylus Pen (0)" eDP1; done &
 $HOME/.config/eww/meowidgets/scripts/timer.py loop &
 

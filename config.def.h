@@ -91,8 +91,9 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,          0,          0,           -1 },
 	{ "Steam",    NULL,       NULL,       1 << 8,       1,          0,          1,           -1 },
 	{ "floatst",  NULL,       NULL,       0,            1,          0,          0,           -1 },
-	{ "Qalculate-gtk", NULL,       NULL,       0,            1,          0,          0,           -1 },
+	{ "Qalculate-gtk", NULL,  NULL,       0,            1,          0,          0,           -1 },
 	{ "st",       NULL,       NULL,       0,            0,          1,          0,           -1 },
+	{ "alacritty",NULL,       NULL,       0,            0,          1,          0,           -1 },
 	{ "kitty",    NULL,       NULL,       0,            0,          1,          0,           -1 },
 	{ "feh",      NULL,       NULL,       0,            1,          0,          0,           -1 },
 	{ "mpv",      NULL,       NULL,       0,            1,          0,          0,           -1 },
@@ -165,6 +166,7 @@ static const char *locksleep[] = {"dm-tool", "lock", NULL};
 
 static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
 static const char *widgets[] = {"/home/f/.config/eww/meowidgets/scripts/launch", NULL};
+static const char *sliderwidgets[] = {"/home/f/.config/eww/meowidgets/scripts/launch_sliders", NULL};
 static const char *freebird[] = {"play", "/home/f/dwm-6.3/freebird.mp3", NULL};
 
 static const char *flameshot[] = {"flameshot", "launcher", NULL};
@@ -256,6 +258,7 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button1,        spawn,          {.v = sliderwidgets } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
