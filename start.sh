@@ -11,7 +11,7 @@ do
     if [ "$csum" != "$new_csum" ]
     then
         csum=$new_csum
-        dwm
+        dbus-run-session dwm
     else
         exit 0
     fi

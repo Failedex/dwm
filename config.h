@@ -144,7 +144,6 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "/home/f/dwm-6.3/dmen.sh" };
-static const char *clipboard[] = {"clipmenu", "-fn", "Iosevka Nerd Font:15", "-nb", "#313244", "-sb", "#45475a", "-sf", "#f38ba8", NULL};
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *layoutmenu_cmd = "/home/f/dwm-6.3/layoutmenu.sh";
 
@@ -164,7 +163,7 @@ static const char *player_previous[] = {"playerctl", "previous", NULL};
 static const char *lockscreen[] = {"i3lock", "-i", "/home/f/Pictures/wallpapers/minimalistic/dark-cat-rosewater.png", NULL};
 static const char *locksleep[] = {"dm-tool", "lock", NULL};
 
-static const char *rofi[] = {"/home/f/.config/rofi/bin/launcher_colorful"};
+static const char *rofi[] = {"rofi", "-show", "drun", NULL};
 static const char *widgets[] = {"/home/f/.config/eww/meowidgets/scripts/launch", NULL};
 static const char *sliderwidgets[] = {"/home/f/.config/eww/meowidgets/scripts/launch_sliders", NULL};
 static const char *freebird[] = {"play", "/home/f/dwm-6.3/freebird.mp3", NULL};
@@ -244,7 +243,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v= lockscreen} },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          {.v= locksleep} },
 	{ MODKEY,                       XK_d,      spawn,          {.v = rofi } },
-	{ MODKEY,                       XK_v,      spawn,          {.v = clipboard } },
+	{ MODKEY,                       XK_v,      spawn,          SHCMD("export CM_LAUNCHER=rofi && clipmenu") },
 	{ MODKEY,                       XK_semicolon,      spawn,  {.v = widgets } },
 	{ MODKEY|ShiftMask|ControlMask, XK_1,      spawn,          {.v = freebird } },
 };
